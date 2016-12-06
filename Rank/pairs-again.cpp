@@ -13,19 +13,24 @@
 #define db long double
 using namespace std ;
 const int L = 3e5+5 ;
-vi divisor[L] ;
+vi divisor[L] ; int pointer[L] ;
 int main()
 {
 	std::ios::sync_with_stdio(false);
-    int N,a,b ; cin>>N ;
+    int N,a,b,remain ; cin>>N ;
 	FEN(i,N) for(int j = i ; j <=N ; j += i) divisor[j].pb(i) ;
     ll ans = 0 ;
-    FEN(i,N-1)
+    FEN(a,N-1)
     {
-        a=i,b=N-i ;
-        if(a > b) break ;
-        for(auto d:divisor[b]) 
-            ans  += lower_bound(divisor[a].begin(),divisor[a].end(),d)  - divisor[a].begin() ;
+        for(int x=a; x < N ; x+=a)
+        {
+            remain = N - x ;
+            for(int i = sz(divisor[remain]) - 1 ; i >= 0 ; --i)
+            {
+                if(divisor[remain][i] <= a) break ;
+                if(pointer[divisor[remain][i]] < a) ++ans , pointer[divisor[remain][i]] = a ;
+            }
+        }
     }
     cout<<ans<<endl ;
     return 0 ;
