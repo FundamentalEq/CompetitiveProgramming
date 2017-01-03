@@ -19,10 +19,7 @@ ll p2[32] ;
 ll combine(ll x,ll y)
 {
     if(x == -1) return y ;
-    int m = 0 ; while(x%2 == 0) ++m,x/=2 ;
-    int n = 0 ; while(y%2 == 0) ++n,y/=2 ;
-    if(n!=m) return -1 ;
-    return p2[n] * ((x*y)/__gcd(x,y)) ;
+    return (x*y)/__gcd(x,y) ;
 }
 int main()
 {
@@ -39,11 +36,7 @@ int main()
         if(dis[i][i] >= inf ) ans = false ;
         else 
         {
-            if(dis[i][i]%2 == 0) 
-            {
-                if( combine(t,dis[i][i]/2) != -1 ) t = combine(t,dis[i][i]/2) ;
-                else t = combine(t,dis[i][i]);
-            }
+            if(dis[i][i]%2 == 0)  t = combine(t,dis[i][i]>>1) ;
             else t = combine(t,dis[i][i]) ;
         }
     }
